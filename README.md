@@ -21,13 +21,16 @@ This project provides a Python script for downloading audio segments from Lalal.
   - (Optional) `google.colab` (if using in Colab)
 - FFmpeg installed on your system for audio processing.
 
-To install the necessary dependencies locally, use:
+**Note on Dependencies:** The script will automatically try to install the required Python libraries (`requests`, `pydub`, `audioop-lts`) upon first run if they are missing.
+
+To install the necessary dependencies manually, use:
 ```bash
-pip install requests pydub
+pip install requests pydub audioop-lts
 ```
 
 If using in Colab, install additional dependencies:
 ```python
+!pip install audioop-lts
 !pip install pydub
 !apt-get install ffmpeg
 ```
@@ -36,12 +39,12 @@ If using in Colab, install additional dependencies:
 
 ### Standalone Script
 1. **Download the Script**:
-   - Save the script to a local file, e.g., `lalal_downloader.py`.
+   - Save the script to a local file, e.g., `lalal_ai_downloader.py`.
 
 2. **Run the Script**:
    - Open a terminal or command prompt and run the script:
      ```bash
-     python lalal_downloader.py
+     python lalal_ai_downloader.py
      ```
 
 3. **Provide Input**:

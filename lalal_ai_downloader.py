@@ -1,7 +1,19 @@
-import requests
-from pydub import AudioSegment
+import sys
+import subprocess
+
+try:
+    import requests
+    from pydub import AudioSegment
+except ImportError:
+    print("Installing missing dependencies (requests, pydub, audioop-lts)...")
+    subprocess.check_call([sys.executable, "-m", "pip",
+                          "install", "requests", "pydub", "audioop-lts"])
+    import requests
+    from pydub import AudioSegment
+
 import os
 import re
+
 
 # Directory to store downloaded segments
 DOWNLOAD_DIR = "segments"
@@ -9,6 +21,7 @@ MERGED_FILE = "merged_audio.mp3"
 
 # Ensure the download directory exists
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
+
 
 def extract_file_id(input_str):
     """Extract the file ID from the provided URL or return it if it's already an ID."""
@@ -20,10 +33,12 @@ def extract_file_id(input_str):
     else:
         raise ValueError("Invalid input. Provide a valid URL or file ID.")
 
+
 def get_base_url(file_id, vocals):
     """Construct the base URL based on file ID and vocals/no vocals."""
     vocals_path = "no_vocals_playlist" if not vocals else "vocals_playlist"
     return f"https://d.lalal.ai/media/split/{file_id}/{vocals_path}/segment-"
+
 
 def download_segment(base_url, segment_number):
     """Download a single segment by its number."""
@@ -45,6 +60,7 @@ def download_segment(base_url, segment_number):
         print(f"Error downloading segment {segment_number}: {e}")
         return None
 
+
 def merge_segments(segment_files):
     """Merge a list of audio segments into a single file."""
     merged = AudioSegment.empty()
@@ -55,6 +71,7 @@ def merge_segments(segment_files):
 
     merged.export(MERGED_FILE, format="mp3")
     print(f"Merged audio saved as {MERGED_FILE}")
+
 
 def main():
     input_str = input("Enter the URL of the segment or ID: ").strip()
@@ -85,6 +102,7 @@ def main():
         merge_segments(segment_files)
     else:
         print("No segments downloaded.")
+
 
 if __name__ == "__main__":
     main()
