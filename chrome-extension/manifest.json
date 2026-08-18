@@ -1,0 +1,22 @@
+{
+	"manifest_version": 3,
+	"name": "Lalal.ai Downloader & Merger",
+	"version": "1.0",
+	"description": "Download and merge Lalal.ai audio segments directly from the browser.",
+	"permissions": [
+		"downloads"
+	],
+	"host_permissions": [
+		"*://*.lalal.ai/*"
+	],
+	"content_scripts": [
+		{
+			"matches": [
+				"*://*.lalal.ai/*"
+			],
+			"js": [
+				"content.js"
+			]
+		}
+	]
+}
